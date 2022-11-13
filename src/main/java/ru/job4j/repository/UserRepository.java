@@ -1,7 +1,7 @@
 package ru.job4j.repository;
 
 import lombok.AllArgsConstructor;
-import org.hibernate.Query;
+import org.hibernate.query.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import ru.job4j.model.User;
@@ -24,8 +24,11 @@ public class UserRepository {
             Integer id = (Integer) session.save(user);
             session.getTransaction().commit();
             user.setId(id);
+
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
         return user;
     }
@@ -47,6 +50,8 @@ public class UserRepository {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
     }
 
@@ -65,7 +70,10 @@ public class UserRepository {
             session.getTransaction().commit();
         } catch (Exception e) {
             session.getTransaction().rollback();
+        } finally {
+            session.close();
         }
+
     }
 
     /**
@@ -75,7 +83,9 @@ public class UserRepository {
     public List<User> findAllOrderById() {
         Session session = sf.openSession();
         Query query = session.createQuery("from User");
-        return query.getResultList();
+        List<User> result = query.getResultList();
+        session.close();
+        return result;
     }
 
     /**
@@ -88,8 +98,9 @@ public class UserRepository {
         Query<User> query = session.createQuery(
                 "from User as u where u.id = :fId", User.class);
         query.setParameter("fId", userId);
-        User inDb = query.uniqueResult();
-        return Optional.ofNullable(inDb);
+        Optional<User> result = query.uniqueResultOptional();
+        session.close();
+        return result;
     }
 
     /**
@@ -102,7 +113,9 @@ public class UserRepository {
         Query query = session.createQuery(
                 "from User as u where u.login LIKE :fKey", User.class);
         query.setParameter("fKey", "%" + key + "%");
-        return query.getResultList();
+        List<User> result = query.getResultList();
+        session.close();
+        return result;
     }
 
     /**
@@ -115,7 +128,8 @@ public class UserRepository {
         Query<User> query = session.createQuery(
                 "from User as u where u.login = :fLogin", User.class);
         query.setParameter("fLogin", login);
-        User inDB = query.uniqueResult();
-        return Optional.ofNullable(inDB);
+        Optional<User> result = query.uniqueResultOptional();
+        session.close();
+        return result;
     }
 }
