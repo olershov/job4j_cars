@@ -3,28 +3,30 @@ package ru.job4j.cars.repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Интерфейс, описывающий хранилище объектов, с методами CRUD
+ */
 public interface Repository<T> {
 
     /**
      * Сохранить в базе.
      * @param t сохраняемый объект.
-     * @return boolean результат сохранения.
+     * @return T сохраненный объект.
      */
-    public boolean create(T t);
+    public T create(T t);
 
     /**
      * Обновить в базе объект.
      * @param t обновляемый объект.
-     * @return boolean результат обновления.
+     * @return T обновлённый объект.
      */
-    public boolean update(T t);
+    public T update(T t);
 
     /**
      * Удалить объект по id.
      * @param id ID
-     * @return boolean результат удаления.
      */
-    public boolean delete(int id);
+    public void delete(int id);
 
     /**
      * Список объектов отсортированных по id.
