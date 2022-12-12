@@ -40,10 +40,10 @@ public class HbmUserRepository implements UserRepository {
     }
 
     @Override
-    public boolean delete(int userId) {
+    public boolean delete(int id) {
         boolean result = true;
         try {
-            crudRepository.run("DELETE User WHERE id = :fId", Map.of("fId", userId));
+            crudRepository.run("DELETE User WHERE id = :fId", Map.of("fId", id));
         } catch (Exception e) {
             result = false;
         }
@@ -56,10 +56,10 @@ public class HbmUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> findById(int userId) {
+    public Optional<User> findById(int id) {
         return crudRepository.optional(
                 "from User where id = :fId", User.class,
-                Map.of("fId", userId)
+                Map.of("fId", id)
         );
     }
 
