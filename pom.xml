@@ -23,7 +23,7 @@
         <profile>
             <id>test</id>
             <properties>
-                <liquibase.config>src/test/resources/liquibase_test.properties</liquibase.config>
+                <liquibase.config>db/liquibase_test.properties</liquibase.config>
             </properties>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -32,7 +32,7 @@
         <profile>
             <id>production</id>
             <properties>
-                <liquibase.config>src/main/resources/liquibase.properties</liquibase.config>
+                <liquibase.config>db/liquibase.properties</liquibase.config>
             </properties>
         </profile>
     </profiles>
@@ -55,18 +55,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.9.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>3.23.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -106,12 +94,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>4.8.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.22</version>
@@ -131,6 +113,7 @@
                 <version>3.6.2</version>
                 <configuration>
                     <propertyFile>${liquibase.config}</propertyFile>
+                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
                 </configuration>
                 <executions>
                     <execution>

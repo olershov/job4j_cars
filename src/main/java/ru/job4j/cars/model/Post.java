@@ -1,8 +1,7 @@
 package ru.job4j.cars.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -46,7 +45,7 @@ public class Post {
     /**
      * История изменения цен по объявлению
      */
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "auto_post_id")
     private List<PriceHistory> prices = new ArrayList<>();
 
@@ -56,6 +55,17 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "car_id")
     private Car car;
+
+    /**
+     * Список пользователей, подписанных на объявление
+     */
+    @ManyToMany
+    @JoinTable(
+            name = "participates",
+            joinColumns = { @JoinColumn(name = "auto_user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "auto_post_id") }
+    )
+    private List<User> participates = new ArrayList<>();
 
     /**
      * Фото автомобиля

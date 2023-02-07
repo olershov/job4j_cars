@@ -1,5 +1,6 @@
 package ru.job4j.cars.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "auto_user")
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
@@ -34,15 +36,4 @@ public class User {
      * Пароль пользователя
      */
     private String password;
-
-    /**
-     * Список объявлений, на обновление цены которых подписан пользователь
-     */
-    @ManyToMany
-    @JoinTable(
-            name = "participates",
-            joinColumns = { @JoinColumn(name = "auto_user_id") },
-            inverseJoinColumns = { @JoinColumn(name = "auto_post_id") }
-    )
-    private List<Post> participates = new ArrayList<>();
 }

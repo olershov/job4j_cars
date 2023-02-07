@@ -3,7 +3,6 @@ package ru.job4j.cars.repository.driver;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cars.model.Driver;
-import ru.job4j.cars.model.Engine;
 import ru.job4j.cars.repository.CrudRepository;
 import java.util.List;
 import java.util.Map;

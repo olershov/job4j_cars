@@ -23,8 +23,7 @@ public class HbmPostRepository implements PostRepository {
     private static final String WITH_PHOTO = " WHERE photo is not null";
     private static final String DELETE = "DELETE Post" + BY_ID;
     private static final String FIND_ALL = "from Post";
-    private static final String DELETE_PRICE_HISTORY = "DELETE PriceHistory ph WHERE ph.auto_post_id = :fId";
-    private static final String BY_BRAND = " p left join fetch p.car pc where pc.name = :fBrand";
+    private static final String BY_BRAND = " p left join fetch p.car pc where pc.brand = :fBrand";
 
     @Override
     public Post create(Post post) {
@@ -40,7 +39,6 @@ public class HbmPostRepository implements PostRepository {
 
     @Override
     public void delete(int id) {
-        deletePriceHistory(id);
         crudRepository.run(DELETE, Map.of("fId", id));
     }
 
@@ -77,15 +75,5 @@ public class HbmPostRepository implements PostRepository {
         return crudRepository.query(
                 FIND_ALL + BY_BRAND, Post.class, Map.of("fBrand", key)
         );
-    }
-
-    private boolean deletePriceHistory(int id) {
-        boolean result = true;
-        try {
-            crudRepository.run(DELETE_PRICE_HISTORY, Map.of("fId", id));
-        } catch (Exception e) {
-            result = false;
-        }
-        return result;
     }
 }
